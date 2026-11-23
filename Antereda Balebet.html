@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="am">
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#202044">
+  <title>ANTEREDA OWNER</title>
+  <style>
+*{box-sizing:border-box}body{margin:0;background:#f3f4fa;color:#202044;font:16px Arial}header{background:#202044;color:white;padding:18px;text-align:center}main{max-width:720px;margin:auto;padding:12px}.card{background:white;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #0001}h2{font-size:19px;margin-top:0}input,button{width:100%;padding:12px;margin:6px 0;border:1px solid #ccd0df;border-radius:9px;font-size:15px}button{background:#5145d8;color:white;border:0;font-weight:bold;cursor:pointer}button.secondary{background:#eef0f8;color:#202044;border:1px solid #ccd0df}button.danger{background:#c62828;color:white}button:disabled{opacity:.55;cursor:not-allowed}.hidden{display:none}.muted{font-size:13px;color:#666}.msg{white-space:pre-wrap;word-break:break-word}.row{display:flex;gap:8px;flex-wrap:wrap}.row button{flex:1;min-width:140px}.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:bold;background:#eef0f8;color:#202044}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.stat{background:#f8f9fd;border:1px solid #e2e6f3;border-radius:10px;padding:12px}.stat b{display:block;font-size:18px;margin-top:4px}.list-item{border-bottom:1px solid #eceef6;padding:10px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}.list-item:last-child{border-bottom:0}.danger-sm{width:auto;padding:8px 12px;font-size:13px;margin:0}
+</style>
+ </head>
+ <body>
+  <header>
+   <h1>ANTEREDA OWNER</h1>
+   <div>
+    የባለቤት ክምችት፣ ሽያጭ እና ትርፍ መቆጣጠሪያ
+   </div>
+  </header>
+  <main> 
+   <section id="ownerLogin" class="card"> 
+    <h2>የባለቤት መግቢያ</h2> 
+    <p class="muted">በባለቤት አካውንት (antereda731@gmail.com) በኢሜይል እና በPIN ይግቡ። ቀድሞ የተቀመጠ ዳታ ካለ ኦፍላይንም ይታያል።</p> 
+    <input id="ownerEmail" type="email" placeholder="antereda731@gmail.com"> 
+    <input id="ownerPin" type="password" inputmode="numeric" maxlength="6" placeholder="የባለቤት PIN (6 አሃዝ)"> 
+    <button id="ownerEnter" type="button">ግባ</button> 
+    <button id="openCachedBtn" type="button" class="secondary">ኦፍላይን የተቀመጠውን ክፈት</button> 
+    <p id="loginMsg" class="msg"></p> 
+   </section> 
+   <section id="dashboard" class="hidden"> 
+    <div class="card"> 
+     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"> 
+      <div> 
+       <b>ባለቤት: antereda731@gmail.com</b> 
+       <div id="lastSyncText" class="muted">
+        መጨረሻ የታደሰበት: ገና አልታደሰም
+       </div> 
+      </div> 
+      <span id="ownerNetBadge" class="badge">...</span> 
+     </div> 
+     <div class="row"> 
+      <button id="refreshAllBtn" type="button">ዳታ አድስ (ዝቅተኛ ዳታ)</button> 
+      <button id="ownerLogout" type="button" class="secondary">ውጣ</button> 
+     </div> 
+     <p id="dashMsg" class="msg"></p> 
+    </div> 
+    <div class="card"> 
+     <h2>📊 ማጠቃለያ</h2> 
+     <div class="stats"> 
+      <div class="stat">
+       <span class="muted">ጠቅላላ ሽያጭ / ገቢ</span>
+       <b id="sumRevenue">0</b>
+      </div> 
+      <div class="stat">
+       <span class="muted">ጠቅላላ ትርፍ</span>
+       <b id="sumProfit">0</b>
+      </div> 
+      <div class="stat">
+       <span class="muted">የዕቃ ብዛት (Items)</span>
+       <b id="sumItems">0</b>
+      </div> 
+      <div class="stat">
+       <span class="muted">የተመዘገቡ ሽያጮች</span>
+       <b id="sumSalesCount">0</b>
+      </div> 
+     </div> 
+    </div> 
+    <div class="card"> 
+     <h2>📦 የክምችት ዝርዝር (Inventory)</h2> 
+     <div id="invList">
+      <p class="muted">ምንም ዕቃ አልተጫነም።</p>
+     </div> 
+    </div> 
+    <div class="card"> 
+     <h2>🧾 የሽያጭ ዝርዝር (Sales)</h2> 
+     <div id="salesList">
+      <p class="muted">ምንም ሽያጭ አልተጫነም።</p>
+     </div> 
+    </div> 
+    <div class="card"> 
+     <h2>👥 ሰራተኞች (ሥራ የለቀቁትን ሰርዝ)</h2> 
+     <p class="muted">ሰራተኛ ሥራ ሲለቅ እዚህ ሰርዝ ስትል ከ /Employees ይሰረዛል።</p> 
+     <div id="empList">
+      <p class="muted">ሰራተኞችን ለማየት "ዳታ አድስ" ይጫኑ።</p>
+     </div> 
+    </div> 
+   </section> 
+  </main> 
+  <script type="module">
+import { firebaseConfig } from './firebase-config.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {
+  getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {
+  getFirestore, collection, getDocs, doc, deleteDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const OWNER_EMAIL = 'antereda731@gmail.com';
+const INV_KEY = 'antereda_owner_inv_v1';
+const SALES_KEY = 'antereda_owner_sales_v1';
+const EMP_KEY = 'antereda_owner_emp_v1';
+const SYNC_KEY = 'antereda_owner_last_sync_v1';
+const SESSION_KEY = 'antereda_owner_unlocked_v1';
+
+const $ = (id) => document.getElementById(id);
+
+let app, auth, db;
+try {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('PASTE')) {
+    throw new Error('firebase-config.js ውስጥ ትክክለኛ apiKey እና appId ሙላ።');
+  }
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+} catch (e) {
+  $('loginMsg').textContent = e.message;
+}
+
+const loadJSON = (k, fallback) => {
+  try { return JSON.parse(localStorage.getItem(k) || JSON.stringify(fallback)); }
+  catch { return fallback; }
+};
+const saveJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+function updateBadge() {
+  $('ownerNetBadge').textContent = navigator.onLine ? '🟢 ኦንላይን' : '🟠 ኦፍላይን (የተቀመጠ ዳታ)';
+  $('lastSyncText').textContent = 'መጨረሻ የታደሰበት: ' + (localStorage.getItem(SYNC_KEY) || 'ገና አልታደሰም');
+}
+
+function showDashboard() {
+  localStorage.setItem(SESSION_KEY, '1');
+  $('ownerLogin').classList.add('hidden');
+  $('dashboard').classList.remove('hidden');
+  renderFromCache();
+}
+
+function renderFromCache() {
+  updateBadge();
+  const inventory = loadJSON(INV_KEY, []);
+  const sales = loadJSON(SALES_KEY, []);
+  const employees = loadJSON(EMP_KEY, []);
+
+  const invMap = new Map(inventory.map((it) => [it.id, it]));
+  let totalRevenue = 0;
+  let totalProfit = 0;
+
+  for (const s of sales) {
+    const qty = Number(s.quantity || 0);
+    const sellPrice = Number(s.unitPrice || 0);
+    const total = Number(s.total ?? qty * sellPrice);
+    totalRevenue += total;
+
+    const invItem = invMap.get(s.productId);
+    const buyPrice = invItem ? Number(invItem.buyPrice || 0) : 0;
+    totalProfit += (sellPrice - buyPrice) * qty;
+  }
+
+  $('sumRevenue').textContent = totalRevenue.toLocaleString();
+  $('sumProfit').textContent = totalProfit.toLocaleString();
+  $('sumItems').textContent = String(inventory.length);
+  $('sumSalesCount').textContent = String(sales.length);
+
+  $('invList').innerHTML = inventory.length
+    ? inventory.map((it) => `
+      <div class="list-item">
+        <div>
+          <b>${it.name}</b>
+          <div class="muted">ክምችት: ${it.quantity} | መግዣ: ${it.buyPrice} | መሸጫ: ${it.sellPrice}</div>
+        </div>
+        <span class="badge">ትርፍ/1: ${Number(it.sellPrice || 0) - Number(it.buyPrice || 0)}</span>
+      </div>
+    `).join('')
+    : '<p class="muted">ምንም ዕቃ የለም።</p>';
+
+  $('salesList').innerHTML = sales.length
+    ? sales.map((s) => `
+      <div class="list-item">
+        <div>
+          <b>${s.productName} × ${s.quantity}</b>
+          <div class="muted">${s.employeeId || '-'} | ${s.payment || ''} | ${s.createdAt ? new Date(s.createdAt).toLocaleString() : ''}</div>
+        </div>
+        <b>${Number(s.total || 0).toLocaleString()}</b>
+      </div>
+    `).join('')
+    : '<p class="muted">ምንም ሽያጭ የለም።</p>';
+
+  $('empList').innerHTML = employees.length
+    ? employees.map((e) => `
+      <div class="list-item">
+        <div>
+          <b>${e.employeeId || e.id}</b>
+          <div class="muted">${e.email || ''} ${e.active === false ? '(Inactive)' : ''}</div>
+        </div>
+        <button type="button" class="danger danger-sm" data-del-emp="${e.id}">ሰርዝ</button>
+      </div>
+    `).join('')
+    : '<p class="muted">የተመዘገበ ሰራተኛ አልተጫነም።</p>';
+
+  document.querySelectorAll('[data-del-emp]').forEach((btn) => {
+    btn.onclick = async () => {
+      const uid = btn.getAttribute('data-del-emp');
+      if (!navigator.onLine) {
+        $('dashMsg').textContent = 'ሰራተኛ ለመሰረዝ ኢንተርኔት/ዳታ ያስፈልጋል።';
+        return;
+      }
+      btn.disabled = true;
+      try {
+        await deleteDoc(doc(db, 'Employees', uid));
+        const updated = loadJSON(EMP_KEY, []).filter((x) => x.id !== uid);
+        saveJSON(EMP_KEY, updated);
+        renderFromCache();
+        $('dashMsg').textContent = `ሰራተኛ (${uid}) ተሰርዟል።`;
+      } catch (err) {
+        $('dashMsg').textContent = 'መሰረዝ አልተቻለም: ' + err.message;
+        btn.disabled = false;
+      }
+    };
+  });
+}
+
+async function refreshAllFromFirestore() {
+  updateBadge();
+  if (!navigator.onLine) {
+    renderFromCache();
+    $('dashMsg').textContent = 'ኦፍላይን ነህ — የተቀመጠው ዳታ እየታየ ነው።';
+    return;
+  }
+  if (!auth?.currentUser || auth.currentUser.email !== OWNER_EMAIL) {
+    $('dashMsg').textContent = 'አዲስ ዳታ ለማውረድ እባክዎ በባለቤት አካውንት ይግቡ።';
+    return;
+  }
+
+  $('refreshAllBtn').disabled = true;
+  $('dashMsg').textContent = 'በማደስ ላይ...';
+  try {
+    const [invSnap, salesSnap, empSnap] = await Promise.all([
+      getDocs(collection(db, 'Inventory')),
+      getDocs(collection(db, 'Sales')),
+      getDocs(collection(db, 'Employees'))
+    ]);
+
+    const inventory = [];
+    invSnap.forEach((d) => {
+      const x = d.data();
+      inventory.push({
+        id: d.id,
+        name: String(x.name || ''),
+        quantity: Number(x.quantity || 0),
+        buyPrice: Number(x.buyPrice || 0),
+        sellPrice: Number(x.sellPrice || 0)
+      });
+    });
+
+    const sales = [];
+    salesSnap.forEach((d) => {
+      const x = d.data();
+      sales.push({
+        id: d.id,
+        productId: String(x.productId || ''),
+        productName: String(x.productName || ''),
+        quantity: Number(x.quantity || 0),
+        unitPrice: Number(x.unitPrice || 0),
+        total: Number(x.total || 0),
+        payment: String(x.payment || ''),
+        employeeId: String(x.employeeId || x.employee || ''),
+        createdAt: x.createdAt?.toDate ? x.createdAt.toDate().toISOString() : ''
+      });
+    });
+
+    const employees = [];
+    empSnap.forEach((d) => {
+      const x = d.data();
+      employees.push({
+        id: d.id,
+        employeeId: String(x.employeeId || d.id),
+        email: String(x.email || ''),
+        active: x.active !== false
+      });
+    });
+
+    saveJSON(INV_KEY, inventory);
+    saveJSON(SALES_KEY, sales);
+    saveJSON(EMP_KEY, employees);
+    localStorage.setItem(SYNC_KEY, new Date().toLocaleString());
+
+    renderFromCache();
+    $('dashMsg').textContent = 'ዳታ በዝቅተኛ ዳታ ታድሷል!';
+  } catch (e) {
+    $('dashMsg').textContent = 'ማደስ አልተቻለም: ' + e.message;
+  } finally {
+    $('refreshAllBtn').disabled = false;
+  }
+}
+
+$('ownerEnter').onclick = async () => {
+  $('loginMsg').textContent = '';
+  const email = $('ownerEmail').value.trim();
+  const pin = $('ownerPin').value.trim();
+  if (email !== OWNER_EMAIL) {
+    $('loginMsg').textContent = 'ይህ ገጽ ለባለቤት (antereda731@gmail.com) ብቻ ነው።';
+    return;
+  }
+  if (!pin) {
+    $('loginMsg').textContent = 'የባለቤት PIN ያስገቡ።';
+    return;
+  }
+  $('ownerEnter').disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth, email, pin);
+    showDashboard();
+    await refreshAllFromFirestore();
+  } catch (e) {
+    $('loginMsg').textContent = e.message;
+  } finally {
+    $('ownerEnter').disabled = false;
+  }
+};
+
+$('openCachedBtn').onclick = () => {
+  $('loginMsg').textContent = '';
+  showDashboard();
+};
+
+$('refreshAllBtn').onclick = refreshAllFromFirestore;
+
+$('ownerLogout').onclick = async () => {
+  localStorage.removeItem(SESSION_KEY);
+  if (auth?.currentUser) {
+    try { await signOut(auth); } catch {}
+  }
+  $('dashboard').classList.add('hidden');
+  $('ownerLogin').classList.remove('hidden');
+  $('ownerPin').value = '';
+};
+
+window.addEventListener('online', updateBadge);
+window.addEventListener('offline', updateBadge);
+updateBadge();
+
+if (localStorage.getItem(SESSION_KEY) === '1') {
+  showDashboard();
+}
+
+if (auth) {
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.email === OWNER_EMAIL) {
+      showDashboard();
+    }
+  });
+}
+</script> 
+ </body>
+</html>
